@@ -1,4 +1,4 @@
-import { createClerkSupabaseClient } from "@/lib/schemas/supabase";
+import { createClerkSupabaseClient } from "@/lib/supabase";
 import { useAuth } from "@clerk/expo";
 import { useMemo } from "react";
 
