@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Native-Wallet-v2.0",
+    "name": "Native Wallet",
     "slug": "Native-Wallet-v2.0",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -38,7 +38,9 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "@clerk/expo",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
