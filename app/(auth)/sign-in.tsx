@@ -92,7 +92,8 @@ export default function SignIn() {
         enableOnAndroid
         enableAutomaticScroll
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flexGrow: 1 }}>
+        contentContainerStyle={{ flexGrow: 1 }}
+        extraScrollHeight={60}>
         <View className="flex-1 justify-center px-6 -mt-16">
           <Image
             source={require("../../assets/images/app-icon.png")}
@@ -161,7 +162,8 @@ export default function SignIn() {
       enableOnAndroid
       enableAutomaticScroll
       keyboardShouldPersistTaps="handled"
-      contentContainerStyle={{ flexGrow: 1 }}>
+      contentContainerStyle={{ flexGrow: 1 }}
+      extraScrollHeight={60}>
       <View className="flex-1 justify-center px-6 -mt-16">
         <Image
           source={require("../../assets/images/app-icon.png")}
