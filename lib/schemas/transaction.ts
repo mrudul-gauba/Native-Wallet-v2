@@ -10,7 +10,7 @@ export const transactionSchema = z.object({
       const parsed = parseFloat(v.replace(/,/g, ""));
       return !Number.isNaN(parsed) && parsed > 0;
     }, "Enter a valid amount."),
-  catrgory: z.custom<CategoryKey>((v) => typeof v === "string"),
+  category: z.custom<CategoryKey>((v) => typeof v === "string"),
   accountId: z.string().min(1, "Select an account."),
   description: z.string().optional(),
   date: z.date(),
