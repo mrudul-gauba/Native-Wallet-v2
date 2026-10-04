@@ -4,7 +4,7 @@ import { useUser } from "@clerk/expo";
 import { useQuery } from "@tanstack/react-query";
 import { useSupabase } from "../useSupabase";
 
-export function useBudgerQuery() {
+export function useBudgetQuery() {
   const { user } = useUser();
   const supabase = useSupabase();
 
