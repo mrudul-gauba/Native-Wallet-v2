@@ -9,7 +9,7 @@ import type { Accounts, AccountType } from "@/lib/services/accounts";
 import { formatPrice } from "@/lib/utils";
 import { useBiometric } from "@/providers/BiometricProvider";
 import { useUserStore } from "@/store/userStore";
-import { useAuth, useUser } from "@clerk/expo";
+import { useAuth, useReverification, useUser } from "@clerk/expo";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
@@ -155,6 +155,45 @@ export default function ProfileScreen() {
     );
   };
   // END OF BIOMETRIC LOGICS
+
+  // USER DELETION CONTENT
+  const deleteUser = useReverification(async () => {
+    if (!user) return;
+
+    await user.delete();
+  });
+  const [deleteAccountVisible, setDeleteAccountVisible] = useState(false);
+  const [deletingAccount, setDeletingAccount] = useState(false);
+
+  const openDeleteAccountModal = () => {
+    setDeleteAccountVisible(true);
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user || deletingAccount) return;
+
+    setDeletingAccount(true);
+
+    try {
+      await deleteUser();
+
+      setDeleteAccountVisible(false);
+
+      await signOut();
+
+      router.replace("/sign-in");
+    } catch (error) {
+      console.error("Account deletion failed:", error);
+
+      setDeletingAccount(false);
+
+      Alert.alert(
+        "Couldn't delete account",
+        "Your account wasn't deleted. Please try again.",
+      );
+    }
+  };
+  // END OF USER DELETION CONTENT
 
   const [modalVisible, setModalVisible] = useState(false);
   const [editingAccount, setEditingAccount] = useState<Accounts | null>(null);
@@ -422,6 +461,13 @@ export default function ProfileScreen() {
             showChevron={false}
             danger
           />
+          <Row
+            icon="trash-2"
+            label="Delete account"
+            onPress={openDeleteAccountModal}
+            showChevron={false}
+            danger
+          />
         </View>
       </ScrollView>
 
@@ -513,6 +559,73 @@ export default function ProfileScreen() {
         </Pressable>
       </Modal>
       {/* END OF UI FOR AVATAR DELETION */}
+
+      {/* DELETE ACCOUNT MODAL */}
+      <Modal
+        visible={deleteAccountVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => {
+          if (!deletingAccount) {
+            setDeleteAccountVisible(false);
+          }
+        }}>
+        <Pressable
+          className="flex-1 bg-black/50 justify-end"
+          onPress={() => {
+            if (!deletingAccount) {
+              setDeleteAccountVisible(false);
+            }
+          }}>
+          <Pressable
+            className="bg-brand-bg rounded-t-[28px] px-5 pt-3 pb-8"
+            onPress={(event) => event.stopPropagation()}>
+            {/* Handle */}
+            <View className="w-10 h-1 rounded-full bg-[#3A3E49] self-center mb-6" />
+
+            {/* Icon */}
+            <View className="w-14 h-14 rounded-full bg-[#332522] items-center justify-center mb-4">
+              <Feather name="trash-2" size={24} color="#FF6B4A" />
+            </View>
+
+            {/* Title */}
+            <Text className="text-white text-xl font-semibold">
+              Delete your account?
+            </Text>
+
+            {/* Description */}
+            <Text className="text-[#8A8D96] text-sm leading-5 mt-2">
+              This permanently deletes your wallet data, accounts, transactions,
+              budgets, and profile. This action cannot be undone.
+            </Text>
+
+            {/* Delete */}
+            <TouchableOpacity
+              activeOpacity={0.8}
+              disabled={deletingAccount}
+              onPress={handleDeleteAccount}
+              className="bg-brand-coral rounded-2xl py-4 items-center mt-6">
+              {deletingAccount ? (
+                <ActivityIndicator color="#FFFFFF" />
+              ) : (
+                <Text className="text-white text-[15px] font-semibold">
+                  Delete account
+                </Text>
+              )}
+            </TouchableOpacity>
+
+            {/* Cancel */}
+            <TouchableOpacity
+              activeOpacity={0.7}
+              disabled={deletingAccount}
+              onPress={() => setDeleteAccountVisible(false)}
+              className="mt-3 bg-[#1A1D26] rounded-2xl py-4 items-center">
+              <Text className="text-white text-[15px] font-medium">Cancel</Text>
+            </TouchableOpacity>
+          </Pressable>
+        </Pressable>
+      </Modal>
+      {/* END DELETE ACCOUNT MODAL */}
 
       <CurrencyPicker
         visible={currencyPickerOpen}
