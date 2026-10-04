@@ -2,7 +2,7 @@ import { BudgetModal } from "@/components/BudgetModal";
 import { TransactionRow } from "@/components/TransactionRow";
 import { getCategoryConfig } from "@/constants/categories";
 import { useAccountsQuery } from "@/hooks/queries/useAccountsQuery";
-import { useBudgerQuery } from "@/hooks/queries/useBudgetQuery";
+import { useBudgetQuery } from "@/hooks/queries/useBudgetQuery";
 import { useTransactionsQuery } from "@/hooks/queries/useTransactionsQuery";
 import { Transaction } from "@/lib/services/transactions";
 import { formatPrice } from "@/lib/utils";
@@ -78,7 +78,7 @@ export default function HomeScreen() {
     isRefetching: transactionsRefetching,
     refetch: refetchTransactions,
   } = useTransactionsQuery();
-  const { data: budget = null, refetch: refetchBudget } = useBudgerQuery();
+  const { data: budget = null, refetch: refetchBudget } = useBudgetQuery();
 
   const loading = accountsLoading || transactionsLoading;
   const refreshing = accountsRefetching || transactionsRefetching;
@@ -148,8 +148,8 @@ export default function HomeScreen() {
         <View className="bg-brand-bg rounded-b-[28px] px-5 pt-5 pb-[22px]">
           <View className="flex-row justify-between items-center mb-[22px]">
             <Image
-              source={require("../../../assets/images/app-icon-light.png")}
-              style={{ width: 80, height: "110%" }}
+              source={require("../../../assets/images/home-screen-icon-09.png")}
+              style={{ width: 220, height: "100%" }}
               contentFit="contain"
             />
             <View className="flex-row items-center gap-2.5">

@@ -41,7 +41,13 @@
       ],
       "@clerk/expo",
       "expo-secure-store",
-      "expo-audio"
+      "expo-audio",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to unlock your account."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

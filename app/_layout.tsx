@@ -1,4 +1,5 @@
 import { queryClient } from "@/lib/query/client";
+import { BiometricProvider } from "@/providers/BiometricProvider";
 import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -17,7 +18,9 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-          <Slot />
+          <BiometricProvider>
+            <Slot />
+          </BiometricProvider>
         </ClerkProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
