@@ -95,7 +95,6 @@ export default function ProfileScreen() {
   const supabase = useSupabase();
   const currency = useUserStore((state) => state.currency);
   const setCurrency = useUserStore((state) => state.setCurrency);
-  // const [biometricLock, setBiometricLock] = useState(false);
 
   // BIOMETRIC LOGICS
   const {
